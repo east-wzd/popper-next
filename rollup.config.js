@@ -1,6 +1,5 @@
 // 导入我们的第三方插件
 import commonjs from 'rollup-plugin-commonjs';
-import VuePlugin from 'rollup-plugin-vue';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { babel } from '@rollup/plugin-babel';
 import { terser } from "rollup-plugin-terser";
@@ -17,6 +16,19 @@ const banner = `// ${lib.name} v${lib.version} Copyright (c) ${year} ${lib.autho
 export default {
   input: 'src/popper/index.ts',
   output: [
+    // {
+    //   file: 'dist/index.esm.js',
+    //   format: 'esm',
+    //   sourcemap: true,
+    //   banner
+    // },
+    // {
+    //   file: 'dist/popper-next.js',
+    //   format: 'umd',
+    //   sourcemap: true,
+    //   name: 'createPopper',
+    //   banner
+    // },
     {
       file: 'dist/index.esm.min.js',
       format: 'esm',
@@ -41,9 +53,7 @@ export default {
     ts({
       tsconfig: path.resolve(__dirname, 'tsconfig.json')
     }),
-    VuePlugin(),
     commonjs(),
     terser()
-  ],
-  external: ['vue']
+  ]
 }

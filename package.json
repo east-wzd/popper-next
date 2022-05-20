@@ -1,6 +1,6 @@
 {
   "name": "popper-next",
-  "version": "1.0.1-alpha.54",
+  "version": "1.0.1-alpha.55",
   "author": {
     "name": "east-wzd",
     "email": "east_wzd@163.com"
@@ -46,7 +46,6 @@
     "rollup-plugin-scss": "^2.6.1",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.30.0",
-    "rollup-plugin-vue": "^6.0.0",
     "sass": "^1.35.1",
     "typescript": "^4.3.2",
     "vite": "^2.3.7",
