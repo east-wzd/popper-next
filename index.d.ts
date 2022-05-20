@@ -11,7 +11,7 @@ export interface PopperConfig {
 }
 
 export interface PopperStatic {
-  (reference: HTMLElement, popper: HTMLElement, config?: defaultConfig): PopperConfig
+  (reference: HTMLElement, popper: HTMLElement, config?: defaultConfig): PopperConfig,
   defaults: defaultConfig
 }
 
