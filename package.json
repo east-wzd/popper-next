@@ -1,7 +1,10 @@
 {
   "name": "popper-next",
-  "version": "1.0.1-alpha.53",
-  "author": "east-wzd",
+  "version": "1.0.1-alpha.54",
+  "author": {
+    "name": "east-wzd",
+    "email": "east_wzd@163.com"
+  },
   "private": false,
   "main": "dist/index.esm.min.js",
   "unpkg": "dist/popper-next.min.js",
