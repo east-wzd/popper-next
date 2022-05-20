@@ -8,24 +8,31 @@ import ts from 'rollup-plugin-typescript2';
 import scss from 'rollup-plugin-scss';
 import dartSass from 'sass';
 import path from 'path';
+import json from '@rollup/plugin-json';
+
+const lib = require("./package.json");
+const year = new Date().getFullYear();
+const banner = `// ${lib.name} v${lib.version} Copyright (c) ${year} ${lib.author}`;
 
 export default {
   input: 'src/popper/index.ts',
   output: [
     {
-      file: 'dist/index.esm.js',
+      file: 'dist/index.esm.min.js',
       format: 'esm',
       sourcemap: true,
-      name: 'createPopper'
+      banner
     },
     {
       file: 'dist/popper-next.min.js',
       format: 'umd',
       sourcemap: true,
-      name: 'createPopper'
+      name: 'createPopper',
+      banner
     }
   ],
   plugins: [
+    json(),
     babel({ babelHelpers: 'bundled' }),
     scss({ include: /\.scss$/, sass: dartSass }),
     nodeResolve({
