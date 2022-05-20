@@ -1,4 +1,4 @@
-// popper-next v1.0.1-alpha.50 Copyright (c) 2022 east-wzd
+// popper-next v1.0.1-alpha.52 Copyright (c) 2022 east-wzd
 /**
  * @description The distance from the DOM element to the viewable range of the browser
  */
@@ -171,7 +171,6 @@ const Popper = function (reference, popper, config) {
     this._elementListener();
 };
 Popper.prototype._init = function () {
-    this.defaults;
     setStyle(this.popper, DEFAULT_STYLES);
     let popperStyleDisplay = getStyleComputedProperty(this.popper, 'display');
     if (popperStyleDisplay === 'none') {
@@ -182,6 +181,9 @@ Popper.prototype._init = function () {
     }
     if (!isBody(getParentNode(this.popper))) {
         this.popper.parentNode.removeChild(this.popper);
+    }
+    else {
+        this.popperDom = 1;
     }
 };
 Popper.prototype._elementListener = function () {

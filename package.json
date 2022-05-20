@@ -1,6 +1,6 @@
 {
   "name": "popper-next",
-  "version": "1.0.1-alpha.52",
+  "version": "1.0.1-alpha.53",
   "author": "east-wzd",
   "private": false,
   "main": "dist/index.esm.min.js",
@@ -23,7 +23,7 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
-    "rollupbuild": "rollup -c rollup.config.js"
+    "rollup": "rollup -c rollup.config.js"
   },
   "dependencies": {},
   "devDependencies": {

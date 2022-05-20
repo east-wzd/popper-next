@@ -1,4 +1,4 @@
-// popper-next v1.0.1-alpha.50 Copyright (c) 2022 east-wzd
+// popper-next v1.0.1-alpha.52 Copyright (c) 2022 east-wzd
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -177,7 +177,6 @@
       this._elementListener();
   };
   Popper.prototype._init = function () {
-      this.defaults;
       setStyle(this.popper, DEFAULT_STYLES);
       let popperStyleDisplay = getStyleComputedProperty(this.popper, 'display');
       if (popperStyleDisplay === 'none') {
@@ -188,6 +187,9 @@
       }
       if (!isBody(getParentNode(this.popper))) {
           this.popper.parentNode.removeChild(this.popper);
+      }
+      else {
+          this.popperDom = 1;
       }
   };
   Popper.prototype._elementListener = function () {

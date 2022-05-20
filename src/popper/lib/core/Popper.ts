@@ -42,8 +42,6 @@ const Popper = function(reference: HTMLElement, popper: HTMLElement, config: def
 } as any
 
 Popper.prototype._init = function() {
-  let defaults: defaultConfig = this.defaults;
-
   setStyle(this.popper, DEFAULT_STYLES);
 
   let popperStyleDisplay = getStyleComputedProperty(this.popper, 'display');
@@ -55,6 +53,8 @@ Popper.prototype._init = function() {
 
   if (!isBody(getParentNode(this.popper))) {
     this.popper.parentNode.removeChild(this.popper);
+  } else {
+    this.popperDom = 1;
   }
 }
 
