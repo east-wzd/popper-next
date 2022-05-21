@@ -63,11 +63,18 @@ Popper.defaults.animate = false;
 | 属性 | 说明 | 类型 | 可选值 | 默认值 | 必填 |
 | ---- | ---- | ---- | ---- | ---- | ---- |
 | placement | 出现的位置 | string | top/bottom/left/right | bottom | 否 |
+| trigger | 触发行为 | string | hover/click/contextmenu | hover | 否 |
 | offset | 出现位置的偏移量 | number | — | 10 | 否 |
 | animate | 添加动画 | boolean | true / false | true | 否 |
 | speed | 动画速度，单位毫秒 | number | — | 400 | 否 |
 | zIndex | 设置元素的堆叠顺序 | number | — | 2000 | 否 |  
 
+## 所有事件
+
+| 事件 | 说明 | 类型 | 返回值
+| ---- | ---- | ---- |
+| show | 显示tooltip | function | void |
+| hide | 隐藏tooltip | function | void |
 
 ## umd版本
 
