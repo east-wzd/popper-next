@@ -195,7 +195,7 @@ function setPosition(type?: any) {
   }
 
   setStyle(this.popper, {
-    display: popperStyleDisplay === 'none' ? this.popperStyleDisplay : popperStyleDisplay,
+    display: (popperStyleDisplay === 'none' || !popperStyleDisplay) ? this.popperStyleDisplay : popperStyleDisplay
   });
   
   const referenceRect = getBoundingClientRect(this.reference);

@@ -7,9 +7,7 @@ let tip = ref<HTMLElement>();
 let Popper = ref(null);
 
 onMounted(() => {
-  Popper.value = createPopper(btn.value as HTMLElement, tip.value as HTMLElement, {
-    trigger: 'hover'
-  });
+  Popper.value = createPopper(btn.value as HTMLElement, tip.value as HTMLElement);
 });
 
 function show() {
@@ -62,6 +60,7 @@ function hide() {
   align-items: center;
   border-radius: 4px;
   line-height: 1.2;
+  display: none;
 }
 .tip .toolip__arrow{
   position: absolute;

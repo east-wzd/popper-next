@@ -1,4 +1,4 @@
-// popper-next v1.0.1-alpha.56 Copyright (c) 2022 [object Object]
+// popper-next v1.0.1-alpha.58 Copyright (c) 2022 [object Object]
 /**
  * @description The distance from the DOM element to the viewable range of the browser
  */
@@ -302,7 +302,7 @@ function setPosition(type) {
         return;
     }
     setStyle(this.popper, {
-        display: popperStyleDisplay === 'none' ? this.popperStyleDisplay : popperStyleDisplay,
+        display: (popperStyleDisplay === 'none' || !popperStyleDisplay) ? this.popperStyleDisplay : popperStyleDisplay
     });
     const referenceRect = getBoundingClientRect(this.reference);
     const popperRect = getBoundingClientRect(this.popper);

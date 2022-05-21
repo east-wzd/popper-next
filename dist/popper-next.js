@@ -1,4 +1,4 @@
-// popper-next v1.0.1-alpha.56 Copyright (c) 2022 [object Object]
+// popper-next v1.0.1-alpha.58 Copyright (c) 2022 [object Object]
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -308,7 +308,7 @@
           return;
       }
       setStyle(this.popper, {
-          display: popperStyleDisplay === 'none' ? this.popperStyleDisplay : popperStyleDisplay,
+          display: (popperStyleDisplay === 'none' || !popperStyleDisplay) ? this.popperStyleDisplay : popperStyleDisplay
       });
       const referenceRect = getBoundingClientRect(this.reference);
       const popperRect = getBoundingClientRect(this.popper);
