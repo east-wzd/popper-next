@@ -18,7 +18,8 @@ export default defineConfig({
     jsxFragment: 'Fragment'
   },
   server: {
-    port: 8888,
+    host: true,
+    port: 6666
   },
   plugins: [vue()]
 })

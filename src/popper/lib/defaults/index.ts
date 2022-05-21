@@ -2,6 +2,7 @@ import { defaultConfig } from '../../types'
 
 const defaults: defaultConfig = {
   placement: 'bottom',
+  trigger: 'hover',
   offset: 10,
   animate: true,
   speed: 400,

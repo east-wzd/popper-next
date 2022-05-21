@@ -1,5 +1,6 @@
 export interface defaultConfig {
   placement?: 'top' | 'bottom' | 'left' | 'right',
+  trigger?: 'hover' | 'click' | 'contextmenu'
   offset?: number,
   animate?: boolean,
   speed?: number,
@@ -7,7 +8,9 @@ export interface defaultConfig {
 }
 
 export interface PopperConfig {
-  defaults: defaultConfig
+  defaults: defaultConfig,
+  show: Function,
+  hide: Function
 }
 
 export interface PopperStatic {

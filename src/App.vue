@@ -7,8 +7,21 @@ let tip = ref<HTMLElement>();
 let Popper = ref(null);
 
 onMounted(() => {
-  Popper.value = createPopper(btn.value as HTMLElement, tip.value as HTMLElement);
+  Popper.value = createPopper(btn.value as HTMLElement, tip.value as HTMLElement, {
+    trigger: 'hover'
+  });
+  Popper.value.defaults.trigger = 'contextmenu';
 });
+
+function show() {
+  console.log(Popper.value);
+  
+  Popper.value.show();
+}
+
+function hide() {
+  Popper.value.hide();
+}
 </script>
 
 <template>
@@ -16,6 +29,8 @@ onMounted(() => {
   <div style="width: 50%;height: 300px;margin: 50px auto;overflow-y: auto;">
     <div style="height: 350px;overflow-y: auto;">
       <div style="height: 400px;"></div>
+      <button @click="show">显示</button>
+      <button @click="hide">隐藏</button>
       <div class="btn btn-top" ref="btn">按钮</div>
       <div class="tip tip-top" ref="tip">提示信息<div class="toolip__arrow toolip__arrow--bottom"></div></div>
     </div>
