@@ -1,4 +1,4 @@
-// popper-next v1.0.1-alpha.52 Copyright (c) 2022 east-wzd
+// popper-next v1.0.1-alpha.56 Copyright (c) 2022 [object Object]
 /**
  * @description The distance from the DOM element to the viewable range of the browser
  */
@@ -167,8 +167,30 @@ const Popper = function (reference, popper, config) {
     };
     this.hideTimer = null;
     this.hideByDisplayTimer = null;
+    // events
+    this.show = show;
+    this.hide = hide;
+    // bind events
+    this.bindEvents = {
+        referenceMouseenterBind: setPosition.bind(this),
+        referenceMouseleaveBind: hidePopper.bind(this),
+        popperMouseenterBind: setPosition.bind(this),
+        popperMouseleaveBind: hidePopper.bind(this),
+        referenceClickBind: setPosition.bind(this),
+        referenceContextmentBind: contextmenuEventListener.bind(this)
+    };
+    this.triggerName = this.defaults.trigger;
+    Object.defineProperty(this.defaults, 'trigger', {
+        get: () => {
+            return this.triggerName;
+        },
+        set: (val) => {
+            this.triggerName = val;
+            this._removeElementListener();
+        }
+    });
     this._init();
-    this._elementListener();
+    this._addElementListener();
 };
 Popper.prototype._init = function () {
     setStyle(this.popper, DEFAULT_STYLES);
@@ -186,15 +208,31 @@ Popper.prototype._init = function () {
         this.popperDom = 1;
     }
 };
-Popper.prototype._elementListener = function () {
-    // reference addEventListener mouseenter
-    this.reference.addEventListener('mouseenter', setPosition.bind(this));
-    // reference addEventListener mouseleave
-    this.reference.addEventListener('mouseleave', hidePopper.bind(this));
-    // reference addEventListener mouseenter
-    this.popper.addEventListener('mouseenter', setPosition.bind(this));
-    // reference addEventListener mouseleave
-    this.popper.addEventListener('mouseleave', hidePopper.bind(this));
+/**
+ * @description addEventListener
+ */
+Popper.prototype._addElementListener = function () {
+    let defaults = this.defaults;
+    switch (defaults.trigger) {
+        case 'hover':
+            // reference addEventListener mouseenter
+            this.reference.addEventListener('mouseenter', this.bindEvents.referenceMouseenterBind);
+            // reference addEventListener mouseleave
+            this.reference.addEventListener('mouseleave', this.bindEvents.referenceMouseleaveBind);
+            // reference addEventListener mouseenter
+            this.popper.addEventListener('mouseenter', this.bindEvents.popperMouseenterBind);
+            // reference addEventListener mouseleave
+            this.popper.addEventListener('mouseleave', this.bindEvents.popperMouseleaveBind);
+            break;
+        case 'click':
+            // reference addEventListener clcik
+            this.reference.addEventListener('click', this.bindEvents.referenceClickBind);
+            break;
+        case 'contextmenu':
+            // reference addEventListener contextmenu
+            this.reference.addEventListener('contextmenu', this.bindEvents.referenceContextmentBind);
+            break;
+    }
     // window addEventListener resize
     window.addEventListener('resize', () => {
         setPosition.apply(this, ['resize']);
@@ -204,16 +242,42 @@ Popper.prototype._elementListener = function () {
     forEach(arr, (val) => {
         if (val !== void 0) {
             val.addEventListener('scroll', () => {
-                if (getStyleComputedProperty(this.popper, 'display') !== 'none') {
-                    hidePopper.bind(this);
-                }
-                else {
+                let popperStyleDisplay = getStyleComputedProperty(this.popper, 'display');
+                if (['click', 'contextmenu'].includes(defaults.trigger) && popperStyleDisplay !== 'none') {
                     setPosition.apply(this, ['scroll']);
+                }
+                else if (popperStyleDisplay !== 'none') {
+                    hidePopper.bind(this);
                 }
             });
         }
     });
 };
+/**
+ * @description removeEventListener
+ */
+Popper.prototype._removeElementListener = function () {
+    this.reference.removeEventListener('mouseenter', this.bindEvents.referenceMouseenterBind);
+    this.reference.removeEventListener('mouseleave', this.bindEvents.referenceMouseleaveBind);
+    this.popper.removeEventListener('mouseenter', this.bindEvents.popperMouseenterBind);
+    this.popper.removeEventListener('mouseleave', this.bindEvents.popperMouseleaveBind);
+    this.reference.removeEventListener('click', this.bindEvents.referenceClickBind);
+    this.reference.removeEventListener('contextmenu', this.bindEvents.referenceContextmentBind);
+    this._addElementListener();
+};
+/**
+ * @description contextmenu eventListener
+ */
+function contextmenuEventListener(e) {
+    setPosition.apply(this);
+    window.addEventListener('click', () => {
+        hidePopper.apply(this);
+    });
+    this.popper.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+    e.preventDefault();
+}
 function setPosition(type) {
     clearTimeout(this.hideTimer);
     clearTimeout(this.hideByDisplayTimer);
@@ -222,11 +286,18 @@ function setPosition(type) {
     if (!this.popperDom && (type === 'resize' || type === 'scroll')) {
         return;
     }
+    let popperStyleDisplay = getStyleComputedProperty(this.popper, 'display');
+    if (this.popperDom &&
+        ['click'].includes(defaults.trigger) &&
+        popperStyleDisplay !== 'none' &&
+        type !== 'scroll') {
+        hidePopper.apply(this);
+        return;
+    }
     if (!this.popperDom) {
         document.body.appendChild(this.popper);
         this.popperDom = 1;
     }
-    let popperStyleDisplay = getStyleComputedProperty(this.popper, 'display');
     if ((type === 'resize' || type === 'scroll') && popperStyleDisplay === 'none') {
         return;
     }
@@ -302,9 +373,22 @@ function hidePopper() {
         }, defaults.animate ? this.defaults.speed - 80 : 0);
     }, 80);
 }
+/**
+ * @description show popper
+ */
+function show() {
+    setPosition.apply(this);
+}
+/**
+ * @description hide popper
+ */
+function hide() {
+    hidePopper.apply(this);
+}
 
 const defaults = {
     placement: 'bottom',
+    trigger: 'hover',
     offset: 10,
     animate: true,
     speed: 400,
