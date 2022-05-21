@@ -83,6 +83,9 @@ Popper.prototype._init = function() {
   }
 }
 
+/**
+ * @description addEventListener
+ */
 Popper.prototype._addElementListener = function() {
   let defaults: defaultConfig = this.defaults;
 
@@ -132,6 +135,22 @@ Popper.prototype._addElementListener = function() {
   });
 }
 
+/**
+ * @description removeEventListener
+ */
+Popper.prototype._removeElementListener = function() {
+  this.reference.removeEventListener('mouseenter', this.bindEvents.referenceMouseenterBind);
+  this.reference.removeEventListener('mouseleave', this.bindEvents.referenceMouseleaveBind);
+  this.popper.removeEventListener('mouseenter', this.bindEvents.popperMouseenterBind);
+  this.popper.removeEventListener('mouseleave', this.bindEvents.popperMouseleaveBind);
+  this.reference.removeEventListener('click', this.bindEvents.referenceClickBind);
+  this.reference.removeEventListener('contextmenu', this.bindEvents.referenceContextmentBind);
+  this._addElementListener();
+}
+
+/**
+ * @description contextmenu eventListener
+ */
 function contextmenuEventListener(e: Event) {
   setPosition.apply(this);
   window.addEventListener('click', () => {
@@ -141,16 +160,6 @@ function contextmenuEventListener(e: Event) {
     e.stopPropagation();
   });
   e.preventDefault();
-}
-
-Popper.prototype._removeElementListener = function() {
-  this.reference.removeEventListener('mouseenter', this.bindEvents.referenceMouseenterBind);
-  this.reference.removeEventListener('mouseleave', this.bindEvents.referenceMouseleaveBind);
-  this.popper.removeEventListener('mouseenter', this.bindEvents.popperMouseenterBind);
-  this.popper.removeEventListener('mouseleave', this.bindEvents.popperMouseleaveBind);
-  this.reference.removeEventListener('click', this.bindEvents.referenceClickBind);
-  this.reference.removeEventListener('contextmenu', this.bindEvents.referenceContextmentBind);
-  this._addElementListener();
 }
 
 function setPosition(type?: any) {

@@ -10,12 +10,9 @@ onMounted(() => {
   Popper.value = createPopper(btn.value as HTMLElement, tip.value as HTMLElement, {
     trigger: 'hover'
   });
-  Popper.value.defaults.trigger = 'contextmenu';
 });
 
 function show() {
-  console.log(Popper.value);
-  
   Popper.value.show();
 }
 
