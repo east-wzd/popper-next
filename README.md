@@ -72,7 +72,7 @@ Popper.defaults.animate = false;
 ## 所有事件
 
 | 事件 | 说明 | 类型 | 返回值
-| ---- | ---- | ---- |
+| ---- | ---- | ---- | ---- |
 | show | 显示tooltip | function | void |
 | hide | 隐藏tooltip | function | void |
 
